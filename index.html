@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tree Memory Match Game</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="header">
+    <h1 class="header__title">Tree Memory Match Game</h1>
+    <p class="header__description">Match all the pairs to complete the game!</p>
+  </header>
+  <main class="main">
+    <section class="game-board" id="game-board"></section>
+    <div class="scoreboard">
+      <p class="scoreboard__moves">Moves: <span class="scoreboard__move-counter" id="move-counter">0</span></p>
+      <p class="scoreboard__status-message" id="status-message"></p>
+      <button class="scoreboard__reset-button" id="reset-button">Restart Game</button>
+    </div>
+  </main>
+  <footer class="footer">
+    <p class="footer__credits">Created by Jack River</p>
+  </footer>
+  <script type="module" src="js/game.js"></script>
+</body>
+</html>

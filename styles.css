@@ -1,0 +1,110 @@
+:root {
+    /* Colors */
+    --color-background: #e9f5e1;
+    --color-text: #333;
+    --color-header-bg: #88c070;
+    --color-header-text: #ffffff;
+    --color-card-bg: #66a15a;
+    --color-card-border: #4d8044;
+    --color-card-flipped-bg: #ffffff;
+    --color-card-flipped-text: #4d8044;
+    --color-button-bg: #4d8044;
+    --color-button-hover-bg: #88c070;
+    --color-button-text: #ffffff;
+
+    /* Fonts */
+    --font-family-body: Arial, sans-serif;
+    --font-size-base: 16px;
+    --font-size-large: 24px;
+
+    /* Dimensions */
+    --card-size: 100px;
+    --animation-speed: 0.3s;
+    --grid-max-width: 600px;
+}
+
+body {
+    font-family: var(--font-family-body);
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    background-color: var(--color-background);
+    color: var(--color-text);
+}
+
+.header {
+    padding: 20px;
+    background-color: var(--color-header-bg);
+    color: var(--color-header-text);
+}
+
+.header__title {
+    margin: 0;
+}
+
+.header__description {
+    margin: 10px 0 0;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.game-board {
+    display: grid;
+    gap: 10px;
+    max-width: var(--grid-max-width);
+    margin: 20px auto;
+    grid-template-columns: repeat(auto-fit, minmax(var(--card-size), 1fr));
+}
+
+.game-board__card {
+    width: var(--card-size);
+    height: var(--card-size);
+    background-color: var(--color-card-bg);
+    border: 2px solid var(--color-card-border);
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0;
+    transition: transform var(--animation-speed) ease, background-color var(--animation-speed);
+}
+
+.game-board__card--flipped,
+.game-board__card--matched {
+    background-color: var(--color-card-flipped-bg);
+    font-size: var(--font-size-large);
+    font-weight: bold;
+    color: var(--color-card-flipped-text);
+    transform: scale(1.05);
+}
+
+.game-board__card--disabled {
+    pointer-events: none;
+    cursor: default;
+}
+
+.scoreboard {
+    margin-top: 20px;
+}
+
+.scoreboard__reset-button {
+    padding: 10px 20px;
+    background-color: var(--color-button-bg);
+    color: var(--color-button-text);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: var(--font-size-base);
+    transition: background-color var(--animation-speed);
+}
+
+.scoreboard__reset-button:hover {
+    background-color: var(--color-button-hover-bg);
+}
+
