@@ -2,6 +2,7 @@
 
 **Tree Memory Match Game** is a fun and interactive browser-based game where players match pairs of tree-themed cards. It's an engaging way to test your memory while enjoying a nature-inspired design.
 
+🎮 **Play it now**: [Tree Memory Match Game](https://bip-river.github.io/tree-memory-match-game/)
 ---
 
 ## Features
