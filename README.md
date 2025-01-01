@@ -29,7 +29,7 @@ To run the game locally, follow these steps:
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/tree-memory-match-game.git
+    git clone https://github.com/bip-river/tree-memory-match-game.git
     ```
 2. Navigate to the project folder:
     ```bash
