@@ -108,3 +108,8 @@ body {
     background-color: var(--color-button-hover-bg);
 }
 
+.scoreboard__timer {
+    margin: 10px 0;
+    font-size: var(--font-size-base);
+    font-weight: bold;
+}
