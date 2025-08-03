@@ -40,12 +40,9 @@ class Game {
         this.matchedCards += 2;
         const totalCards = document.querySelectorAll('.game-board__card').length;
         if (this.matchedCards === totalCards) {
-            updateStatusMessage('You won! 🎉');
-        }
-        if (this.matchedCards === totalCards) {
             clearInterval(this.timer); // Stop the timer
             updateStatusMessage('You won! 🎉');
-        }      
+        }
     }
 
     endGame(didWin) {
