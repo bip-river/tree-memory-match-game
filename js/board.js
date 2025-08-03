@@ -4,10 +4,11 @@ import { CONFIG } from './config.js';
 
 const trees = ['🌲', '🌳', '🌴', '🎄', '🍁', '🍂', '🌱', '🍃'];
 
-export function createBoard() {
+export function createBoard(pairCount = trees.length) {
     const board = document.getElementById('game-board');
     board.innerHTML = '';
-    const symbols = shuffle([...trees, ...trees]);
+    const selectedTrees = trees.slice(0, pairCount);
+    const symbols = shuffle([...selectedTrees, ...selectedTrees]);
     setGridColumns(board, symbols.length);
 
     symbols.forEach((symbol, index) => {
@@ -39,6 +40,6 @@ export function initializeBoard() {
     });
 }
 
-export function resetBoard() {
-    createBoard();
+export function resetBoard(pairCount = trees.length) {
+    createBoard(pairCount);
 }

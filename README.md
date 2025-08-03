@@ -9,6 +9,7 @@
 
 - **Interactive Gameplay**: Match pairs of cards to win.
 - **Dynamic Scoring**: Track your moves as you play.
+- **Three Difficulty Levels**: Choose from Easy, Medium, or Hard.
 - **Responsive Design**: Looks great on any screen size.
 - **Tree Theme**: Cards feature delightful tree symbols like 🌲 and 🌳.
 
@@ -16,10 +17,11 @@
 
 ## How to Play
 
-1. Click on a card to reveal its symbol.
-2. Click on another card to find its match.
-3. Match all pairs to complete the game.
-4. Restart at any time with the "Restart Game" button.
+1. Select a difficulty level from the dropdown.
+2. Click on a card to reveal its symbol.
+3. Click on another card to find its match.
+4. Match all pairs to complete the game.
+5. Restart at any time with the "Restart Game" button.
 
 ---
 

@@ -93,6 +93,14 @@ body {
     margin-top: 20px;
 }
 
+.scoreboard__difficulty {
+    margin-bottom: 10px;
+}
+
+.scoreboard__difficulty select {
+    padding: 5px;
+}
+
 .scoreboard__reset-button {
     padding: 10px 20px;
     background-color: var(--color-button-bg);
