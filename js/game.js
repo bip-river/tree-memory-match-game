@@ -1,17 +1,18 @@
 import { createBoard, initializeBoard } from './board.js';
 import { setMoveCounter, updateStatusMessage } from './ui.js';
-import { CONFIG } from './config.js';
+import { DIFFICULTIES } from './config.js';
 
 class Game {
     constructor() {
+        this.difficulty = 'medium';
         this.moves = 0;
         this.matchedCards = 0;
         this.timer = null; // Timer interval ID
-        this.timeLeft = 60; // Time left in seconds
+        this.timeLeft = DIFFICULTIES[this.difficulty].time; // Time left in seconds
     }
 
     startTimer() {
-        this.timeLeft = 60; // Reset the timer
+        this.timeLeft = DIFFICULTIES[this.difficulty].time; // Reset the timer
         document.getElementById('timer').textContent = this.timeLeft;
         this.timer = setInterval(() => {
             this.timeLeft--;
@@ -25,6 +26,11 @@ class Game {
     
     init() {
         document.getElementById('reset-button').addEventListener('click', () => {
+            this.resetGame();
+        });
+        const difficultySelect = document.getElementById('difficulty-select');
+        difficultySelect.addEventListener('change', (e) => {
+            this.difficulty = e.target.value;
             this.resetGame();
         });
         initializeBoard();
@@ -60,7 +66,7 @@ class Game {
         this.matchedCards = 0;
         setMoveCounter(this.moves);
         updateStatusMessage('');
-        createBoard();
+        createBoard(DIFFICULTIES[this.difficulty].pairs);
         this.startTimer(); // Start a new timer
     }
 }

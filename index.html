@@ -14,6 +14,14 @@
   <main class="main">
     <section class="game-board" id="game-board"></section>
     <div class="scoreboard">
+      <div class="scoreboard__difficulty">
+        <label for="difficulty-select">Difficulty:</label>
+        <select id="difficulty-select">
+          <option value="easy">Easy</option>
+          <option value="medium" selected>Medium</option>
+          <option value="hard">Hard</option>
+        </select>
+      </div>
       <p class="scoreboard__moves">Moves: <span class="scoreboard__move-counter" id="move-counter">0</span></p>
       <p class="scoreboard__timer">Time Left: <span id="timer">60</span> seconds</p>
       <p class="scoreboard__status-message" id="status-message"></p>
