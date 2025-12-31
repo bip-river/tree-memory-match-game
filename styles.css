@@ -1,3 +1,9 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 :root {
     /* Colors */
     --color-background: #e9f5e1;
@@ -30,6 +36,7 @@ body {
     text-align: center;
     background-color: var(--color-background);
     color: var(--color-text);
+    overflow-x: hidden;
 }
 
 .header {
@@ -40,10 +47,12 @@ body {
 
 .header__title {
     margin: 0;
+    font-size: clamp(1.6rem, 2.8vw + 1rem, 2.6rem);
 }
 
 .header__description {
     margin: 10px 0 0;
+    font-size: clamp(0.95rem, 1.2vw + 0.75rem, 1.2rem);
 }
 
 .main {
@@ -59,11 +68,12 @@ body {
     max-width: var(--grid-max-width);
     margin: 20px auto;
     grid-template-columns: repeat(auto-fit, minmax(var(--card-size), 1fr));
+    width: min(92vw, var(--grid-max-width));
 }
 
 .game-board__card {
-    width: var(--card-size);
-    height: var(--card-size);
+    width: 100%;
+    aspect-ratio: 1 / 1;
     background-color: var(--color-card-bg);
     border: 2px solid var(--color-card-border);
     border-radius: 8px;
@@ -73,6 +83,10 @@ body {
     align-items: center;
     font-size: 0;
     transition: transform var(--animation-speed) ease, background-color var(--animation-speed);
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
 }
 
 .game-board__card--flipped,
@@ -98,11 +112,13 @@ body {
 }
 
 .scoreboard__difficulty select {
-    padding: 5px;
+    padding: 8px 12px;
+    min-height: 44px;
 }
 
 .scoreboard__reset-button {
     padding: 10px 20px;
+    min-height: 44px;
     background-color: var(--color-button-bg);
     color: var(--color-button-text);
     border: none;
@@ -110,6 +126,7 @@ body {
     cursor: pointer;
     font-size: var(--font-size-base);
     transition: background-color var(--animation-speed);
+    touch-action: manipulation;
 }
 
 .scoreboard__reset-button:hover {
@@ -120,4 +137,27 @@ body {
     margin: 10px 0;
     font-size: var(--font-size-base);
     font-weight: bold;
+}
+
+@media (max-width: 480px) {
+    .header {
+        padding: 12px 16px;
+    }
+
+    .header__description {
+        margin-top: 6px;
+    }
+
+    .main {
+        padding: 12px;
+    }
+
+    .game-board {
+        margin: 12px auto;
+        gap: 8px;
+    }
+
+    .scoreboard {
+        margin-top: 16px;
+    }
 }

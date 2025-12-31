@@ -7,18 +7,20 @@ class Game {
         this.difficulty = 'medium';
         this.moves = 0;
         this.matchedCards = 0;
-        this.timer = null; // Timer interval ID
+        this.timerId = null; // Timer interval ID
         this.timeLeft = DIFFICULTIES[this.difficulty].time; // Time left in seconds
     }
 
-    startTimer() {
-        this.timeLeft = DIFFICULTIES[this.difficulty].time; // Reset the timer
-        document.getElementById('timer').textContent = this.timeLeft;
-        this.timer = setInterval(() => {
+    startTimerOnce() {
+        if (this.timerId) {
+            return;
+        }
+        this.timerId = setInterval(() => {
             this.timeLeft--;
             document.getElementById('timer').textContent = this.timeLeft;
             if (this.timeLeft <= 0) {
-                clearInterval(this.timer);
+                clearInterval(this.timerId);
+                this.timerId = null;
                 this.endGame(false); // End game if timer runs out
             }
         }, 1000);
@@ -46,13 +48,15 @@ class Game {
         this.matchedCards += 2;
         const totalCards = document.querySelectorAll('.game-board__card').length;
         if (this.matchedCards === totalCards) {
-            clearInterval(this.timer); // Stop the timer
+            clearInterval(this.timerId); // Stop the timer
+            this.timerId = null;
             updateStatusMessage('You won! 🎉');
         }
     }
 
     endGame(didWin) {
-        clearInterval(this.timer); // Stop the timer
+        clearInterval(this.timerId); // Stop the timer
+        this.timerId = null;
         const message = didWin ? 'You won! 🎉' : 'Time’s up! Try again!';
         updateStatusMessage(message);
         // Disable all cards to prevent further interaction
@@ -61,13 +65,15 @@ class Game {
     }
     
     resetGame() {
-        clearInterval(this.timer); // Stop any running timer
+        clearInterval(this.timerId); // Stop any running timer
+        this.timerId = null;
         this.moves = 0;
         this.matchedCards = 0;
         setMoveCounter(this.moves);
         updateStatusMessage('');
         createBoard(DIFFICULTIES[this.difficulty].pairs);
-        this.startTimer(); // Start a new timer
+        this.timeLeft = DIFFICULTIES[this.difficulty].time;
+        document.getElementById('timer').textContent = this.timeLeft;
     }
 }
 
