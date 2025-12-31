@@ -22,7 +22,7 @@ export function createBoard(pairCount = trees.length) {
 
 function setGridColumns(board, totalCards) {
     const columns = Math.ceil(Math.sqrt(totalCards));
-    board.style.gridTemplateColumns = `repeat(${columns}, minmax(${CONFIG.CARD_SIZE}px, 1fr))`;
+    board.style.gridTemplateColumns = `repeat(${columns}, minmax(0, 1fr))`;
     board.style.maxWidth = `${CONFIG.GRID_MAX_WIDTH}px`;
 }
 
@@ -34,7 +34,10 @@ function updateCSSVariables() {
 export function initializeBoard() {
     updateCSSVariables();
     const board = document.getElementById('game-board');
-    board.addEventListener('click', (event) => {
+    board.addEventListener('pointerup', (event) => {
+        if (event.pointerType === 'mouse' && event.button !== 0) {
+            return;
+        }
         const card = event.target.closest('.game-board__card');
         if (card) flipCard(card);
     });

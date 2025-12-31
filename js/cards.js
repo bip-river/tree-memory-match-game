@@ -14,6 +14,7 @@ export function flipCard(card) {
         return;
     }
 
+    game.startTimerOnce();
     card.classList.add('game-board__card--flipped');
     card.textContent = card.dataset.symbol;
     flippedCards.push(card);

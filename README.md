@@ -41,6 +41,15 @@ To run the game locally, follow these steps:
 
 ---
 
+## Manual Test Checklist (Mobile)
+
+- Load the page on a ~375px-wide viewport and confirm the full grid is visible without horizontal scrolling.
+- Tap the first card and confirm the timer starts only after the first flip.
+- Flip and match a pair, then restart the game and verify the timer resets and stays idle until the next flip.
+- Tap cards quickly to ensure no text selection or double-tap zoom occurs.
+
+---
+
 ## Code Highlights
 
 Here’s an example of the code that shuffles the card symbols:
