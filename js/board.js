@@ -2,14 +2,41 @@ import { shuffle } from './utils.js';
 import { flipCard } from './cards.js';
 import { CONFIG } from './config.js';
 
-const trees = ['🌲', '🌳', '🌴', '🎄', '🍁', '🍂', '🌱', '🍃'];
+const trees = [
+    '🌲',
+    '🌳',
+    '🌴',
+    '🎄',
+    '🍁',
+    '🍂',
+    '🌱',
+    '🍃',
+    '🌿',
+    '🌵',
+    '🍀',
+    '🍄',
+    '🪴',
+    '🌾',
+    '🌺',
+    '🌸',
+    '🌼',
+    '🍇',
+];
 
-export function createBoard(pairCount = trees.length) {
+export function createBoard({ rows, cols }) {
     const board = document.getElementById('game-board');
     board.innerHTML = '';
+    const totalCards = rows * cols;
+    if (totalCards % 2 !== 0) {
+        throw new Error(`Board must have an even number of cards. Received ${totalCards}.`);
+    }
+    const pairCount = totalCards / 2;
+    if (pairCount > trees.length) {
+        throw new Error(`Not enough symbols for ${pairCount} pairs. Add more tree icons.`);
+    }
     const selectedTrees = trees.slice(0, pairCount);
     const symbols = shuffle([...selectedTrees, ...selectedTrees]);
-    setGridColumns(board, symbols.length);
+    setGridColumns(board, cols, rows);
 
     symbols.forEach((symbol, index) => {
         const card = document.createElement('div');
@@ -20,9 +47,9 @@ export function createBoard(pairCount = trees.length) {
     });
 }
 
-function setGridColumns(board, totalCards) {
-    const columns = Math.ceil(Math.sqrt(totalCards));
+function setGridColumns(board, columns, rows) {
     board.style.gridTemplateColumns = `repeat(${columns}, minmax(0, 1fr))`;
+    board.style.gridTemplateRows = `repeat(${rows}, minmax(0, 1fr))`;
     board.style.maxWidth = `${CONFIG.GRID_MAX_WIDTH}px`;
 }
 
@@ -43,6 +70,6 @@ export function initializeBoard() {
     });
 }
 
-export function resetBoard(pairCount = trees.length) {
-    createBoard(pairCount);
+export function resetBoard({ rows, cols }) {
+    createBoard({ rows, cols });
 }
