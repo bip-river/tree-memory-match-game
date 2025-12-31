@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tree Memory Match Game</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -12,21 +15,31 @@
     <p class="header__description">Match all the pairs to complete the game!</p>
   </header>
   <main class="main">
-    <section class="game-board" id="game-board"></section>
-    <div class="scoreboard">
-      <div class="scoreboard__difficulty">
-        <label for="difficulty-select">Difficulty:</label>
-        <select id="difficulty-select">
+    <section class="hud">
+      <div class="hud__item hud__difficulty">
+        <label class="hud__label" for="difficulty-select">Difficulty</label>
+        <select id="difficulty-select" class="hud__select">
           <option value="easy">Easy</option>
           <option value="medium" selected>Medium</option>
           <option value="hard">Hard</option>
         </select>
       </div>
-      <p class="scoreboard__moves">Moves: <span class="scoreboard__move-counter" id="move-counter">0</span></p>
-      <p class="scoreboard__timer">Time Left: <span id="timer">60</span> seconds</p>
-      <p class="scoreboard__status-message" id="status-message"></p>
-      <button class="scoreboard__reset-button" id="reset-button">Restart Game</button>
-    </div>
+      <div class="hud__item">
+        <span class="hud__label">Moves</span>
+        <span class="hud__value" id="move-counter">0</span>
+      </div>
+      <div class="hud__item">
+        <span class="hud__label">Time Left</span>
+        <span class="hud__value"><span id="timer">60</span>s</span>
+      </div>
+    </section>
+    <section class="board-shell">
+      <div class="game-board" id="game-board"></div>
+    </section>
+    <section class="controls">
+      <p class="status-message" id="status-message"></p>
+      <button class="controls__reset-button" id="reset-button">Restart Game</button>
+    </section>
   </main>
   <footer class="footer">
     <p class="footer__credits">Created by Jack River</p>
