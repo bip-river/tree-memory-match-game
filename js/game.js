@@ -1,27 +1,42 @@
 import { createBoard, initializeBoard } from './board.js';
-import { setMoveCounter, updateStatusMessage } from './ui.js';
-import { DIFFICULTIES } from './config.js';
+import { setMoveCounter, updateDifficultyLabel, updateStatusMessage, updateTimerLabel, updateTimerValue } from './ui.js';
+import { DIFFICULTY } from './config.js';
+import { resetFlippedCards } from './cards.js';
 
 class Game {
     constructor() {
         this.difficulty = 'medium';
         this.moves = 0;
         this.matchedCards = 0;
-        this.timerId = null; // Timer interval ID
-        this.timeLeft = DIFFICULTIES[this.difficulty].time; // Time left in seconds
+        this.timerId = null;
+        this.previewTimeoutId = null;
+        this.isLocked = false;
+        this.isPreviewActive = false;
+        this.timerStarted = false;
+        this.timeLeft = 0;
+        this.timeElapsed = 0;
     }
 
     startTimerOnce() {
-        if (this.timerId) {
+        if (this.timerId || this.timerStarted) {
+            return;
+        }
+        this.timerStarted = true;
+        const config = this.getDifficultyConfig();
+        if (config.timeLimitSec === null) {
+            this.timerId = setInterval(() => {
+                this.timeElapsed++;
+                updateTimerValue(this.timeElapsed);
+            }, 1000);
             return;
         }
         this.timerId = setInterval(() => {
             this.timeLeft--;
-            document.getElementById('timer').textContent = this.timeLeft;
+            updateTimerValue(this.timeLeft);
             if (this.timeLeft <= 0) {
                 clearInterval(this.timerId);
                 this.timerId = null;
-                this.endGame(false); // End game if timer runs out
+                this.endGame(false);
             }
         }, 1000);
     }
@@ -39,6 +54,29 @@ class Game {
         this.resetGame();
     }
 
+    getDifficultyConfig() {
+        return DIFFICULTY[this.difficulty];
+    }
+
+    getMismatchDelayMs() {
+        return this.getDifficultyConfig().mismatchDelayMs;
+    }
+
+    isInteractionLocked() {
+        return this.isLocked;
+    }
+
+    lockInteractions(locked) {
+        this.isLocked = locked;
+    }
+
+    handlePlayerAction() {
+        const config = this.getDifficultyConfig();
+        if (config.timerStart === 'onFirstFlip' && !this.isPreviewActive) {
+            this.startTimerOnce();
+        }
+    }
+
     incrementMoves() {
         this.moves++;
         setMoveCounter(this.moves);
@@ -48,32 +86,85 @@ class Game {
         this.matchedCards += 2;
         const totalCards = document.querySelectorAll('.game-board__card').length;
         if (this.matchedCards === totalCards) {
-            clearInterval(this.timerId); // Stop the timer
-            this.timerId = null;
-            updateStatusMessage('You won! 🎉');
+            this.endGame(true);
         }
     }
 
     endGame(didWin) {
-        clearInterval(this.timerId); // Stop the timer
-        this.timerId = null;
+        this.stopTimer();
         const message = didWin ? 'You won! 🎉' : 'Time’s up! Try again!';
         updateStatusMessage(message);
+        this.lockInteractions(true);
         // Disable all cards to prevent further interaction
         const cards = document.querySelectorAll('.game-board__card');
         cards.forEach(card => card.classList.add('game-board__card--disabled'));
     }
     
     resetGame() {
-        clearInterval(this.timerId); // Stop any running timer
-        this.timerId = null;
+        this.stopTimer();
+        this.clearPreviewTimeout();
         this.moves = 0;
         this.matchedCards = 0;
         setMoveCounter(this.moves);
         updateStatusMessage('');
-        createBoard(DIFFICULTIES[this.difficulty].pairs);
-        this.timeLeft = DIFFICULTIES[this.difficulty].time;
-        document.getElementById('timer').textContent = this.timeLeft;
+        resetFlippedCards();
+        const config = this.getDifficultyConfig();
+        createBoard({ rows: config.rows, cols: config.cols });
+        updateDifficultyLabel(config.label);
+        this.setupTimer(config);
+        this.startPreview(config);
+    }
+
+    setupTimer(config) {
+        this.timeLeft = config.timeLimitSec ?? 0;
+        this.timeElapsed = 0;
+        this.timerStarted = false;
+        if (config.timeLimitSec === null) {
+            updateTimerLabel('Time Elapsed');
+            updateTimerValue(this.timeElapsed);
+        } else {
+            updateTimerLabel('Time Left');
+            updateTimerValue(this.timeLeft);
+        }
+    }
+
+    startPreview(config) {
+        this.isPreviewActive = true;
+        this.lockInteractions(true);
+        const cards = document.querySelectorAll('.game-board__card');
+        cards.forEach(card => {
+            card.classList.add('game-board__card--flipped');
+            card.textContent = card.dataset.symbol;
+            card.classList.remove('game-board__card--disabled');
+        });
+        this.previewTimeoutId = setTimeout(() => {
+            cards.forEach(card => {
+                card.classList.remove('game-board__card--flipped');
+                card.textContent = '';
+            });
+            this.isPreviewActive = false;
+            this.lockInteractions(false);
+            if (config.timerStart === 'afterPreview') {
+                this.startTimerOnce();
+            }
+            this.previewTimeoutId = null;
+        }, config.previewMs);
+    }
+
+    clearPreviewTimeout() {
+        if (this.previewTimeoutId) {
+            clearTimeout(this.previewTimeoutId);
+            this.previewTimeoutId = null;
+        }
+        this.isPreviewActive = false;
+    }
+
+    stopTimer() {
+        if (this.timerId) {
+            clearInterval(this.timerId);
+            this.timerId = null;
+        }
+        this.timerStarted = false;
     }
 }
 

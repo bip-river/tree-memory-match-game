@@ -9,7 +9,7 @@
 
 - **Interactive Gameplay**: Match pairs of cards to win.
 - **Dynamic Scoring**: Track your moves as you play.
-- **Three Difficulty Levels**: Choose from Easy, Medium, or Hard.
+- **Four Difficulty Levels**: Choose from Easy, Medium, Hard, or Expert.
 - **Responsive Design**: Looks great on any screen size.
 - **Tree Theme**: Cards feature delightful tree symbols like 🌲 and 🌳.
 
@@ -22,6 +22,25 @@
 3. Click on another card to find its match.
 4. Match all pairs to complete the game.
 5. Restart at any time with the "Restart Game" button.
+
+---
+
+## Difficulty Definitions (Single Source of Truth)
+
+Difficulty settings live in `js/config.js` under the `DIFFICULTY` object. Each entry controls the board size, preview length, timer mode, and mismatch delay.
+
+| Difficulty | Rows x Cols | Cards | Preview | Timer | Mismatch Delay |
+| --- | --- | --- | --- | --- | --- |
+| Easy | 3x4 | 12 | 2.5s | No limit (elapsed) | 1.1s |
+| Medium | 4x4 | 16 | 1.5s | 90s limit | 0.9s |
+| Hard | 4x5 | 20 | 0.9s | 75s limit | 0.8s |
+| Expert | 6x6 | 36 | 0.3s | 120s limit (starts on first flip) | 0.65s |
+
+### Tuning Difficulty
+
+Adjust only the values in `DIFFICULTY` to change gameplay. The board uses `rows * cols`, and must remain even so cards can pair.
+
+---
 
 ---
 
@@ -41,12 +60,25 @@ To run the game locally, follow these steps:
 
 ---
 
-## Manual Test Checklist (Mobile)
+## QA Checklist
 
-- Load the page on a ~375px-wide viewport and confirm the full grid is visible without horizontal scrolling.
-- Tap the first card and confirm the timer starts only after the first flip.
-- Flip and match a pair, then restart the game and verify the timer resets and stays idle until the next flip.
-- Tap cards quickly to ensure no text selection or double-tap zoom occurs.
+### Gameplay
+- Each difficulty produces the correct number of cards and pairs.
+- Preview works (cards flip up then down) and blocks input.
+- Timer starts after preview ends (or on first flip for Expert).
+- Restart clears timers and timeouts; no stacked intervals.
+- Win condition works for all difficulties.
+- Loss condition works for timed difficulties.
+
+### UI
+- Board displays correctly for each difficulty.
+- No horizontal overflow on mobile.
+- No console errors.
+
+### Edge Cases
+- Restart during preview.
+- Change difficulty during preview.
+- Rapid tapping during mismatch delay.
 
 ---
 
