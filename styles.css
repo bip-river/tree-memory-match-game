@@ -137,10 +137,9 @@ body {
 .game-board {
     display: grid;
     gap: clamp(10px, 1.6vw, 14px);
-    max-width: var(--grid-max-width);
     margin: 0 auto;
     grid-template-columns: repeat(auto-fit, minmax(var(--card-size), 1fr));
-    width: min(92vw, var(--grid-max-width));
+    width: min(100%, var(--grid-max-width));
 }
 
 .game-board__card {
