@@ -40,11 +40,16 @@ function checkForMatch() {
 function markAsMatched(card1, card2) {
     card1.classList.add('game-board__card--matched', 'game-board__card--disabled');
     card2.classList.add('game-board__card--matched', 'game-board__card--disabled');
+    animateCard(card1, 'matched-animate');
+    animateCard(card2, 'matched-animate');
     flippedCards = [];
     game.handleMatch();
 }
 
 function unflipCards(card1, card2) {
+    animateCard(card1, 'mismatch-animate');
+    animateCard(card2, 'mismatch-animate');
+    game.handleMismatch();
     const delay = game.getMismatchDelayMs();
     mismatchTimeoutId = setTimeout(() => {
         card1.classList.remove('game-board__card--flipped');
@@ -55,6 +60,15 @@ function unflipCards(card1, card2) {
         isClickLocked = false;
         mismatchTimeoutId = null;
     }, delay);
+}
+
+function animateCard(card, className) {
+    card.classList.remove(className);
+    void card.offsetWidth;
+    card.classList.add(className);
+    const removeAnimation = () => card.classList.remove(className);
+    card.addEventListener('animationend', removeAnimation, { once: true });
+    setTimeout(removeAnimation, 300);
 }
 
 export function resetFlippedCards() {
