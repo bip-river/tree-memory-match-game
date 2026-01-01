@@ -27,6 +27,14 @@
         <p class="hud__hint" id="difficulty-detail"></p>
       </div>
       <div class="hud__item">
+        <span class="hud__label">Score</span>
+        <span class="hud__value" id="score-counter">0</span>
+      </div>
+      <div class="hud__item">
+        <span class="hud__label">Streak</span>
+        <span class="hud__value" id="streak-counter">0</span>
+      </div>
+      <div class="hud__item">
         <span class="hud__label">Moves</span>
         <span class="hud__value" id="move-counter">0</span>
       </div>
@@ -40,9 +48,60 @@
     </section>
     <section class="controls">
       <p class="status-message" id="status-message"></p>
+      <label class="audio-toggle" for="audio-toggle">
+        <input type="checkbox" id="audio-toggle" />
+        <span>Sound</span>
+      </label>
       <button class="controls__reset-button" id="reset-button">Restart Game</button>
     </section>
   </main>
+  <div class="modal modal--hidden" id="summary-modal" aria-hidden="true">
+    <div class="modal__backdrop" data-modal-close></div>
+    <div class="modal__content" role="dialog" aria-modal="true" aria-labelledby="summary-title">
+      <h2 class="modal__title" id="summary-title">Game Over</h2>
+      <p class="modal__result" id="summary-result"></p>
+      <div class="modal__grid">
+        <div>
+          <p class="modal__label">Difficulty</p>
+          <p class="modal__value" id="summary-difficulty"></p>
+        </div>
+        <div>
+          <p class="modal__label">Final Score</p>
+          <p class="modal__value" id="summary-score"></p>
+        </div>
+        <div>
+          <p class="modal__label" id="summary-time-label">Time</p>
+          <p class="modal__value" id="summary-time"></p>
+        </div>
+        <div>
+          <p class="modal__label">Moves</p>
+          <p class="modal__value" id="summary-moves"></p>
+        </div>
+        <div>
+          <p class="modal__label">Accuracy</p>
+          <p class="modal__value" id="summary-accuracy"></p>
+        </div>
+        <div>
+          <p class="modal__label">Max Streak</p>
+          <p class="modal__value" id="summary-max-streak"></p>
+        </div>
+      </div>
+      <div class="badges" id="summary-badges"></div>
+      <div class="modal__best">
+        <h3 class="modal__subtitle">Best on this difficulty</h3>
+        <ul class="modal__list">
+          <li><span>Best Score</span><strong id="best-score">0</strong></li>
+          <li><span>Best Time</span><strong id="best-time">--</strong></li>
+          <li><span>Best Moves</span><strong id="best-moves">--</strong></li>
+          <li><span>Best Streak</span><strong id="best-streak">0</strong></li>
+        </ul>
+      </div>
+      <div class="modal__actions">
+        <button class="controls__reset-button" id="summary-restart">Play Again</button>
+        <button class="modal__link" id="summary-difficulty-link" type="button">Change Difficulty</button>
+      </div>
+    </div>
+  </div>
   <footer class="footer">
     <p class="footer__credits">Created by Jack River</p>
   </footer>

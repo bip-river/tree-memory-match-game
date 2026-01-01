@@ -2,6 +2,9 @@ export const CONFIG = {
     CARD_FLIP_DELAY: 1000,
     CARD_SIZE: 100,
     GRID_MAX_WIDTH: 600,
+    SCORE_MATCH: 100,
+    SCORE_MISMATCH_PENALTY: 20,
+    STREAK_MULTIPLIERS: [1, 1.2, 1.4, 1.6, 1.8, 2],
 };
 
 export const DIFFICULTY = {
@@ -13,6 +16,9 @@ export const DIFFICULTY = {
         mismatchDelayMs: 1100,
         timerStart: 'afterPreview',
         label: 'Easy: 12 cards, long preview, no time limit.',
+        parTimeSec: 60,
+        parMoves: 10,
+        streakBadge: 4,
     },
     medium: {
         rows: 4,
@@ -22,6 +28,9 @@ export const DIFFICULTY = {
         mismatchDelayMs: 900,
         timerStart: 'afterPreview',
         label: 'Medium: 16 cards, moderate preview, 90s limit.',
+        parTimeSec: 55,
+        parMoves: 14,
+        streakBadge: 5,
     },
     hard: {
         rows: 4,
@@ -31,6 +40,9 @@ export const DIFFICULTY = {
         mismatchDelayMs: 800,
         timerStart: 'afterPreview',
         label: 'Hard: 20 cards, short preview, 75s limit.',
+        parTimeSec: 65,
+        parMoves: 18,
+        streakBadge: 6,
     },
     expert: {
         rows: 6,
@@ -40,5 +52,8 @@ export const DIFFICULTY = {
         mismatchDelayMs: 650,
         timerStart: 'onFirstFlip',
         label: 'Expert: 36 cards, lightning preview, 120s limit.',
+        parTimeSec: 110,
+        parMoves: 30,
+        streakBadge: 8,
     },
 };

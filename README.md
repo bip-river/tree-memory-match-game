@@ -8,10 +8,13 @@
 ## Features
 
 - **Interactive Gameplay**: Match pairs of cards to win.
-- **Dynamic Scoring**: Track your moves as you play.
+- **Dynamic Scoring**: Score points for matches with streak multipliers.
 - **Four Difficulty Levels**: Choose from Easy, Medium, Hard, or Expert.
 - **Responsive Design**: Looks great on any screen size.
 - **Tree Theme**: Cards feature delightful tree symbols like 🌲 and 🌳.
+- **Best Results Tracking**: Best score, time, moves, and streak persist per difficulty.
+- **End-of-Game Summary**: Result screen with accuracy, streaks, and badges.
+- **Optional Audio**: Lightweight match/mismatch/win tones with a mute-by-default toggle.
 
 ---
 
@@ -22,6 +25,42 @@
 3. Click on another card to find its match.
 4. Match all pairs to complete the game.
 5. Restart at any time with the "Restart Game" button.
+
+---
+
+## Scoring & Streak Rules
+
+- **Match points**: +100 points per match.
+- **Streak multipliers**: consecutive matches boost points.
+  - Streak 1: x1
+  - Streak 2: x1.2
+  - Streak 3: x1.4
+  - Streak 4+: x1.6 (capped at x2)
+- **Mismatch penalty**: -20 points (score never goes below 0).
+
+Moves count each pair attempt (every two flips).
+
+---
+
+## Persistence
+
+Best results are saved per difficulty in `localStorage`, under keys like:
+`treeMemory.best.easy`. Stored metrics include best score, fastest win time,
+fewest moves, best streak, and total games played.
+
+Audio preference is stored at `treeMemory.audio.enabled` and is muted by default.
+
+---
+
+## Tuning Gameplay & Rewards
+
+Scoring, streak multipliers, and par targets live in `js/config.js`:
+
+- `CONFIG.SCORE_MATCH`, `CONFIG.SCORE_MISMATCH_PENALTY`
+- `CONFIG.STREAK_MULTIPLIERS`
+- `DIFFICULTY.*.parTimeSec`, `DIFFICULTY.*.parMoves`, `DIFFICULTY.*.streakBadge`
+
+Adjust these values to tune difficulty and badge thresholds.
 
 ---
 
@@ -63,22 +102,29 @@ To run the game locally, follow these steps:
 ## QA Checklist
 
 ### Gameplay
+- Score increases on match and applies streak multipliers.
+- Mismatch resets streak and applies penalty.
 - Each difficulty produces the correct number of cards and pairs.
 - Preview works (cards flip up then down) and blocks input.
 - Timer starts after preview ends (or on first flip for Expert).
 - Restart clears timers and timeouts; no stacked intervals.
 - Win condition works for all difficulties.
 - Loss condition works for timed difficulties.
+- End-of-game summary appears on win/loss.
+- Best results persist per difficulty across refreshes.
 
 ### UI
 - Board displays correctly for each difficulty.
 - No horizontal overflow on mobile.
 - No console errors.
+- Animations play on match/mismatch and respect reduced motion.
+- Summary modal is responsive and legible on mobile.
 
 ### Edge Cases
 - Restart during preview.
 - Change difficulty during preview.
 - Rapid tapping during mismatch delay.
+- Restart or change difficulty from the summary modal.
 
 ---
 

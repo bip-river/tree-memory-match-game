@@ -198,6 +198,14 @@ body {
     box-shadow: 0 0 0 2px rgba(74, 167, 101, 0.5), 0 10px 18px rgba(74, 167, 101, 0.25);
 }
 
+.game-board__card.matched-animate {
+    animation: match-pop 0.22s ease-out;
+}
+
+.game-board__card.mismatch-animate {
+    animation: mismatch-shake 0.24s ease-in-out;
+}
+
 .controls {
     display: flex;
     flex-direction: column;
@@ -240,10 +248,207 @@ body {
     outline-offset: 3px;
 }
 
+.audio-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    font-weight: 600;
+    color: var(--muted);
+}
+
+.audio-toggle input {
+    width: 18px;
+    height: 18px;
+}
+
+.modal {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    z-index: 10;
+}
+
+.modal--hidden {
+    display: none;
+}
+
+.modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(12, 24, 18, 0.5);
+}
+
+.modal__content {
+    position: relative;
+    width: min(92vw, 640px);
+    background: var(--surface-elevated);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    padding: 24px;
+    box-shadow: var(--shadow);
+    text-align: left;
+}
+
+.modal__title {
+    margin: 0 0 6px;
+    font-size: clamp(1.6rem, 2.2vw + 1rem, 2.2rem);
+}
+
+.modal__result {
+    margin: 0 0 18px;
+    font-weight: 600;
+    color: var(--accent-2);
+}
+
+.modal__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 14px;
+    margin-bottom: 16px;
+}
+
+.modal__label {
+    margin: 0 0 4px;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+}
+
+.modal__value {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.modal__best {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 14px;
+    border: 1px solid var(--border);
+    margin-bottom: 16px;
+}
+
+.modal__subtitle {
+    margin: 0 0 10px;
+    font-size: 0.95rem;
+}
+
+.modal__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 8px;
+}
+
+.modal__list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95rem;
+}
+
+.modal__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+}
+
+.modal__link {
+    background: none;
+    border: none;
+    color: var(--accent-2);
+    font-weight: 600;
+    cursor: pointer;
+    padding: 10px 12px;
+    min-height: 44px;
+}
+
+.modal__link:focus-visible {
+    outline: 3px solid rgba(74, 167, 101, 0.45);
+    outline-offset: 3px;
+    border-radius: 999px;
+}
+
+.badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.badge {
+    background: rgba(74, 167, 101, 0.12);
+    color: var(--accent-2);
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.badge--perfect {
+    background: rgba(74, 122, 167, 0.12);
+    color: #2a5f87;
+}
+
+.badge--streak {
+    background: rgba(167, 74, 128, 0.12);
+    color: #7a2f5d;
+}
+
+.badge--par {
+    background: rgba(74, 167, 101, 0.18);
+}
+
+.hud__item--wide {
+    grid-column: span 2;
+}
+
 .footer {
     padding: 16px 12px 28px;
     color: var(--muted);
     font-size: 0.9rem;
+}
+
+@keyframes match-pop {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 rgba(74, 167, 101, 0);
+    }
+    50% {
+        transform: scale(1.08);
+        box-shadow: 0 0 0 6px rgba(74, 167, 101, 0.2);
+    }
+    100% {
+        transform: scale(1.02);
+        box-shadow: 0 0 0 rgba(74, 167, 101, 0);
+    }
+}
+
+@keyframes mismatch-shake {
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-4px);
+    }
+    50% {
+        transform: translateX(4px);
+    }
+    75% {
+        transform: translateX(-2px);
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -252,6 +457,11 @@ body {
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
+    }
+
+    .game-board__card.matched-animate,
+    .game-board__card.mismatch-animate {
+        animation: none;
     }
 }
 
