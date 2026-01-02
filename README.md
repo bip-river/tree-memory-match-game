@@ -146,7 +146,7 @@ export function shuffle(array) {
 
 ## Screenshot
 
-![Game Screenshot](./Screenshot.png)
+![Game Screenshot](./gameplay_ss.png)
 
 ---
 
